@@ -1,8 +1,7 @@
-![alt text](https://github.com/Kiseljuu/Linux-Configuration-Arch-Linux/blob/main/Desktop.png?raw=true)
-
-
 # Linux-Configuration-Arch-Linux
 This is my modified EndeavourOS installation, it is based on Arch Linux so this will work on all systems based on it.
+
+![alt text](https://github.com/Kiseljuu/Linux-Configuration-Arch-Linux/blob/main/Desktop.png?raw=true)
 
 # All Packages
 <details>
