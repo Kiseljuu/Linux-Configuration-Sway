@@ -1,0 +1,12 @@
+# System
+alias ins='yay -S'
+alias clean='yay -Sc'
+alias rem='yay -Rnsc'
+alias search='pacman -Qi'
+
+# Shortcuts
+alias vim='nvim'
+alias rmdir='rm -r'
+alias ls='colorls --dark --sd -l'
+alias lsa='colorls --dark --sd -la'
+alias cat='bat --paging=never --theme=Dracula'
