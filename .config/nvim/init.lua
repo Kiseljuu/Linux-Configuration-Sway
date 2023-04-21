@@ -1,152 +1,168 @@
-------------------------
--- Nvim Configuration --
-------------------------
+-----------
+-- VonOS --
+---------------------------
+ -- Neovim Configuration --
+ --------------------------
 
--- Options
-local set = vim.opt
 
-set.tabstop = 2
-set.shiftwidth = 2
-set.softtabstop = 2
-set.expandtab = true
-set.showmode = false 
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- Faster Loading
+require('impatient')
 
-vim.opt.number = true
-vim.opt.hlsearch = true                
-vim.opt.incsearch = true              
-vim.opt.smartcase = true 
-vim.opt.ignorecase = true
-vim.opt.cursorline = true
-vim.opt.cursorline = true
-vim.opt.smartindent = true 
-vim.opt.termguicolors = true
-vim.opt.wildignore = {'*/cache/*', '*/tmp/*'}
+-- Leader Key
+vim.g.mapleader = " " 
 
-vim.cmd[[colorscheme dracula]]
+-- Imports
+require('opts') 
+require('keys')
+require('plug')
 
--- Keybindings
-local map = vim.api.nvim_set_keymap
-local opt = 
-{
- noremap = true,
- silent = true
+-- Color Theme
+vim.cmd("colorscheme dracula")
+
+
+--------------------------
+-- Plugin Configuration --
+--------------------------
+
+-- Treesitter
+require('nvim-treesitter.configs').setup {
+ ensure_installed = { "lua", "c", "css", "rust", "toml" },
+ auto_install = true,
+ highlight = {
+  enable = true,
+  additional_vim_regex_highlighting = false,
+ },
+ ident = { enable = true }, 
+ rainbow = {
+  enable = true,
+  extended_mode = true,
+  max_file_lines = nil,
+ }
 }
 
-map("n", "<C-k>", "10k", opt)
-map("n", "<C-j>", "10j", opt)
-map("n", "<leader>s", ":x!<CR>", opt)
-map("n", "<leader>q", ":q!<CR>", opt)
-map("n", "<leader>u", ":PackerUpdate<CR>", opt)
-map("n", "<leader>t", ":TSUpdate<CR>", opt)
+-- Dracula Theme
+require('dracula').setup({
+ colors = {
+  bg = "#282A36",
+  fg = "#F8F8F2",
+  red = "#FF5555",
+  cyan = "#8BE9FD",
+  pink = "#FF79C6",
+  menu = "#21222C",
+  green = "#50fa7b",
+  visual = "#3E4452",
+  yellow = "#F1FA8C",
+  orange = "#FFB86C",
+  purple = "#BD93F9",
+  nontext = "#3B4048",
+  comment = "#6272A4",
+  gutter_fg = "#4B5263",
+  selection = "#44475A",
+  bright_red = "#FF6E6E",
+  bright_cyan = "#A4FFFF",
+  bright_blue = "#D6ACFF",
+  bright_green = "#69FF94",
+  bright_white = "#FFFFFF",
+  bright_yellow = "#FFFFA5",
+  bright_magenta = "#FF92DF"
+ },
+ transparent_bg = true,
+ italic_comment = true,
+ show_end_of_buffer = true
+})
 
+-- Lualine
+require('lualine').setup ({
+ options = {
+  icons_enabled = true,
+  theme = 'dracula-nvim',
+  section_separators = '',
+  component_separators = '',
+ sections = {
+   lualine_a = {'mode'},
+   lualine_c = {'filename'},
+   lualine_y = {'progress'},
+   lualine_z = {'location'},
+   lualine_x = {'fileformat', 'filetype'}
+  },
+ },
+})
 
+-- Indentation
+require("indent_blankline").setup {
+ show_end_of_line = true
+}
 
--- Packer
-local ensure_packer = function()
- local fn = vim.fn
- local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
- if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
- vim.cmd [[packadd packer.nvim]]
-  return true
-  end
-  return false
- end
-local packer_bootstrap = ensure_packer()
+-- Mason
+require("mason").setup({
+ ui = {
+  icons = {
+   package_pending = "",
+   package_installed = "",
+   package_uninstalled = "",
+  },
+ }
+})
+require("mason-lspconfig").setup()
 
+-- LSP     
+local rt = require("rust-tools")
+rt.setup({
+ server = {
+  on_attach = function(_, bufnr)
+  -- Hover actions
+  vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+  -- Code action groups
+  vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+  end,
+ },
+})
 
--- Packer Plugins
-return require('packer').startup(function(use)
-
-  -- Packer
-  use 'wbthomason/packer.nvim'
-
-  -- Treesitter
-  use 
-  {
-   'nvim-treesitter/nvim-treesitter',
-   run = function()
-    local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-    ts_update()
-   end,
+-- Completion Plugin Setup
+local cmp = require'cmp'
+cmp.setup({
+ snippet = {
+  expand = function(args)
+  vim.fn["vsnip#anonymous"](args.body)
+  end,
+ },
+ mapping = {
+  ['<Tab>'] = cmp.mapping.select_next_item(),
+  ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+  ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
+  ['<C-e>'] = cmp.mapping.close(),
+  ['<C-Space>'] = cmp.mapping.complete(),
+  ['<CR>'] = cmp.mapping.confirm({
+  behavior = cmp.ConfirmBehavior.Insert,
+  select = true,
+  })
+ },
+ sources = {
+  { name = 'calc'},                               -- Math Calculation
+  { name = 'path' },                              -- File Paths
+  { name = 'nvim_lsp_signature_help'},            -- Display Function Signatures with Current Parameter Emphasized
+  { name = 'vsnip', keyword_length = 2 },         -- Nvim-cmp Source for Vim-vsnip 
+  { name = 'buffer', keyword_length = 2 },        -- Source Current Buffer
+  { name = 'nvim_lua', keyword_length = 2},       -- Complete Neovim's Lua Runtime API: vim.lsp.*
+  { name = 'nvim_lsp', keyword_length = 3 },      -- Language Server
+ },
+ window = {
+  completion = cmp.config.window.bordered(),
+  documentation = cmp.config.window.bordered(),
+ },
+ formatting = {
+  fields = {'menu', 'abbr', 'kind'},
+  format = function(entry, item)
+  local menu_icon = {
+   nvim_lsp = 'λ',
+   vsnip = '⋗',
+   buffer = 'Ω',
+   path = '🖫',
   }
-  require('nvim-treesitter.configs').setup ({
-  highlight = {
-   enable = true,
-  },
-  ensure_installed = {
-   'rust',
-   'c',
-   'lua',
-   'css'
-  },
-  })
-
-  -- Dracula Theme
-  use 'Mofiqul/dracula.nvim'
-  local dracula = require("dracula")
-  dracula.setup ({
-  colors = {
-   bg = "#282A36",
-   fg = "#F8F8F2",
-   selection = "#44475A",
-   comment = "#6272A4",
-   red = "#FF5555",
-   orange = "#FFB86C",
-   yellow = "#F1FA8C",
-   green = "#50fa7b",
-   purple = "#BD93F9",
-   cyan = "#8BE9FD",
-   pink = "#FF79C6",
-   bright_red = "#FF6E6E",
-   bright_green = "#69FF94",
-   bright_yellow = "#FFFFA5",
-   bright_blue = "#D6ACFF",
-   bright_magenta = "#FF92DF",
-   bright_cyan = "#A4FFFF",
-   bright_white = "#FFFFFF",
-   menu = "#21222C",
-   visual = "#3E4452",
-   gutter_fg = "#4B5263",
-   nontext = "#3B4048"
-  },
-  transparent_bg = true,
-  italic_comment = true,
-  show_end_of_buffer = true
-  })
-
-  -- Lualine
-  use 
-  {
-   'nvim-lualine/lualine.nvim',
-   requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }  
-  require('lualine').setup ({
-    options = {
-     theme = 'dracula-nvim',
-     icons_enabled = true,
-     component_separators = '|',
-     section_separators = '',
-    sections = {
-      lualine_a = {'mode'},
-      lualine_c = {'filename'},
-      lualine_x = {'fileformat', 'filetype'},
-      lualine_y = {'progress'},
-      lualine_z = {'location'}
-     },
-    },
-  })
-
-  -- Indentation
-  use "lukas-reineke/indent-blankline.nvim"
-  require("indent_blankline").setup {
-   show_end_of_line = true
-  }
-
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
+  item.menu = menu_icon[entry.source.name]
+  return item
+  end,
+ },
+})
