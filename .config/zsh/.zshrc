@@ -1,33 +1,50 @@
-# Path Variables Unique
-typeset -aU path
+#########
+# VonOS #
+######################
+ # ZSH Configuration #
+ #####################
+
+
 
 # Tab Complete
 autoload -Uz compinit;compinit
 _comp_options+=(globdots)
 
-# ColorLS Completion
-source $(dirname $(gem which colorls))/tab_complete.sh
-
 # Aliases
 source ~/.config/zsh/aliases
- 
-# Vi 
-bindkey -v
-export KEYTIMEOUT=1
+
+# No History Duplicates
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
 
 # Moving .zcompdump
 compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
-# TheFuck Command Correction Program
-eval $(thefuck --alias)
+# Path Variables Unique
+typeset -aU path
+
+# ColorLS Completion
+source $(dirname $(gem which colorls))/tab_complete.sh
+
+# Vi 
+bindkey -v
+export KEYTIMEOUT=1
 
 # ZPlug
 source ~/.zplug/init.zsh
 
 # ZPlug Packages
 zplug 'dracula/zsh', as:theme
+zplug 'zsh-users/zsh-autosuggestions'
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+# ZSH Autosuggestions
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # ZSH Theme
 DRACULA_DISPLAY_GIT=0
@@ -93,6 +110,7 @@ ZSH_HIGHLIGHT_STYLES[redirection]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[arg0]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[default]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[cursor]='standout'
+
 
 # Commands upon Terminal Spawn
 neofetch
