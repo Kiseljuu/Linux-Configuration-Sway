@@ -19,8 +19,8 @@ export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
 # Custom Directories
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export CARGO_HOME="$XDG_DATA_HOME/cargo/bin"
+export CARGO_HOME="$XDG_CONFIG_HOME/.cargo"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
 # Paths
-export PATH="/usr/bin":"/usr/bin/vendor_perl":"/usr/bin/core_perl":"$HOME/.config/local/share/cargo/bin":"$HOME/.config/local/share/gem/ruby/3.0.0/bin"
+export PATH="/usr/bin":"/usr/bin/vendor_perl":"/usr/
