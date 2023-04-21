@@ -1,12 +1,29 @@
 # System
-alias ins='yay -S'
 alias clean='yay -Sc'
-alias rem='yay -Rnsc'
+alias install='yay -S'
+alias remove='yay -Rnsc'
 alias search='pacman -Qi'
+# alias list="LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} {print name}' | sort -t: -u -k1,1"
+
+# Programming
+alias rc='rustc'
+alias cn='cargo new'
+alias cr='cargo run'
+alias cc='cargo check'
+alias cb='cargo build'
 
 # Shortcuts
-alias vim='nvim'
+alias cl='clear'
 alias rmdir='rm -r'
+alias cpdir='cp -r'
 alias ls='colorls --dark --sd -l'
 alias lsa='colorls --dark --sd -la'
 alias cat='bat --paging=never --theme=Dracula'
+
+# Utilities
+alias show='imv'
+alias screenshot='grim'
+
+# Rebinding
+alias df='duf'
+alias vim='nvim'
