@@ -1,5 +1,11 @@
-# Dracula themed dark color settings for colorls
-#
+#########
+# VonOS #
+####################
+ # Dracula ColorLS #
+ ###################
+
+
+
 # Main Colors
 unrecognized_file: '#ffb86c' # Orange
 recognized_file:   '#f8f8f2' # Foreground
