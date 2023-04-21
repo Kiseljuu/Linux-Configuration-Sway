@@ -1,17 +1,14 @@
-### Output configuration
-
 # Configuration
-output eDP-1    resolution 1920x1080@60.00Hz position 0,0
+output eDP-1    resolution 1920x1080@60.00Hz position 0,0    scale 1.00
 output HDMI-A-1 resolution 2560x1440@75.00Hz position 1920,0 scale 1.10
 
-# Define outputs
-set $output-primary HDMI-A-1 
+# Define Outputs
+set $output-primary   HDMI-A-1 
 set $output-secondary eDP-1
 
-# workspace to displays
+# Workspaces on Primary Screen
 workspace 1 output $output-primary
 workspace 2 output $output-primary
 workspace 3 output $output-primary
 workspace 4 output $output-primary
 workspace 5 output $output-primary
-
