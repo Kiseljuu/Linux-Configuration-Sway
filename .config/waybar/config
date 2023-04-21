@@ -1,7 +1,5 @@
 {
- "layer": "top",
- "position": "top", 
- "height": 36,
+ "layer": "top", "position": "top", "height": 36,
 
  "modules-left": 
  [
@@ -9,14 +7,12 @@
   "sway/mode",
   "battery" 
  ],
-
  "modules-center": 
  [
-  "custom/gammarelay",
-  "clock",
-  "custom/pacman" 
+  "custom/gammarelaytemperature",
+  "custom/pacman",
+  "custom/gammarelaybrightness"
  ],
-
  "modules-right": 
  [ 
   "pulseaudio", 
@@ -29,19 +25,17 @@
 
  "sway/workspaces": 
  {
-  "disable-scroll": true,
-  "all-outputs": true,
-  "format": "{icon}",
+  "disable-scroll": true, "all-outputs": true, "format": "{icon}",
   "format-icons": 
   {
-  "1": "",
-  "2": "",
-  "3": "",
-  "4": "",
-  "5": "",
-  "urgent": "",
-  "focused": "",
-  "default": ""
+   "1": "",
+   "2": "",
+   "3": "",
+   "4": "",
+   "5": "",
+   "urgent": "",
+   "focused": "",
+   "default": ""
   }
  },
 
@@ -57,12 +51,20 @@
   "tooltip": false
  },
 
- "custom/gammarelay": 
+ "custom/gammarelaytemperature": 
  {
   "format": "  {}",
   "exec": "wl-gammarelay-rs watch {t}K",
   "on-scroll-up": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n +100",
   "on-scroll-down": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n -100"
+ },
+
+ "custom/gammarelaybrightness": 
+ {
+  "format": "  {}%",
+  "exec": "wl-gammarelay-rs watch {bp}",
+  "on-scroll-up": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d +0.02",
+  "on-scroll-down": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d -0.02"
  },
 
  "memory": 
@@ -73,7 +75,7 @@
 
  "temperature": 
  {
-  //"thermal-zone": 1,
+  "thermal-zone": 1,
   "interval": "4",
   "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
   "critical-threshold": 75,
@@ -87,9 +89,7 @@
  {
   "states": 
   {
-   "good": 95,
-   "warning": 30,
-   "critical": 15
+   "good": 95, "warning": 30, "critical": 15
   },
   "format": "{icon}  {capacity}%",
   "format-plugged": "  {capacity}%",
@@ -99,17 +99,10 @@
  "custom/power": 
  {
   "format":"",
-  "on-click": "exec ~/.config/waybar/custom_modules/power-menu.sh",
-  "tooltip": false,
+  "on-click": "exec poweroff",
+  "tooltip": false
  },
  
- "clock": 
- {
-  "format": "  {:%H:%M    %e %B}",
-  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-  "today-format": "<span color=\"#fb9062\"><b>{}</b></span>",
- },
-
  "cpu": 
  {
   "interval": "1",      
@@ -121,13 +114,13 @@
 
  "network": 
  {
-   // "interface": "wlan0", // (Optional) To force the use of this interface,
-   "format-wifi": "  {essid}",
-   "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-   "format-disconnected": "",
-   "family": "ipv4",
-   "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n {bandwidthUpBits}  {bandwidthDownBits}",
-   "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n {bandwidthUpBits}  {bandwidthDownBits}"
+  "format-wifi": "  {essid}",
+  "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+  "format-disconnected": "",
+  "family": "ipv4",
+  "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n {bandwidthUpBits}  {bandwidthDownBits}",
+  "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n {bandwidthUpBits}  {bandwidthDownBits}",
+  "on-click": "kitty --hold zsh -c 'nmtui'; pkill -SIGRTMIN+8 waybar"
  },
 
  "pulseaudio": 
@@ -154,7 +147,7 @@
   "interval": 3600,                     
   "exec": "checkupdates | wc -l",      
   "exec-if": "exit 0",         
-  "on-click": "kitty --hold zsh -c 'yay && source ${HOME}/.zplug/init.zsh && source ${HOME}/.config/zsh/.zshrc && zplug update'; pkill -SIGRTMIN+8 waybar",
+  "on-click": "kitty --hold zsh -c 'yay && source ${HOME}/.zplug/init.zsh && source ${HOME}/.config/zsh/.zshrc && zplug update && rustup update'; pkill -SIGRTMIN+8 waybar",
   "signal": 8,
   "max-length": 5,
   "min-length": 3
