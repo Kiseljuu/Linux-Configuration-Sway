@@ -1,47 +1,46 @@
-/*
-******************************
-* Warning & Critical Palette *
-****************************** 
+/* 
+*********
+* VonOS *
+***********************
+ * Waybar Stylization *
+ **********************
 */
 
+
+
+/* Blinking for Warning and Critical states */
 @keyframes blink-warning 
 {
  70% 
- {
-  color: @blink;
+ { 
+  color: @blink; 
  }
 
  to 
- {
-  color: @blink;
-  background-color: @warning;
+ { 
+  color: @blink; 
+  background-color: @warning; 
  }
 }
 
 @keyframes blink-critical 
 {
  70% 
- {
-  color: @blink;
+ { 
+  color: @blink; 
  }
 
  to 
- {
-  color: @blink;
-  background-color: @critical;
+ { 
+  color: @blink; 
+  background-color: @critical; 
  }
 }
-
-
-/*
-**********
-* Styles *
-********** 
-*/
 
 /* Colors */
 @define-color red #ff0000;
 @define-color green #00ff00;
+@define-color orange #ffb758;
 @define-color mode #c90076;
 @define-color dark #282a36;
 @define-color blink #ff4545;
@@ -53,10 +52,10 @@
 /* Reset */
 * 
 {
- border: 10px;
+ min-height:    0;
  border-radius: 5px;
- min-height: 0;
- margin: 0.3em 0.3em 0.3em 0.3em;
+ border:        10px;
+ margin:        0.3em 0.3em 0.3em 0.3em;
 }
 
 /* Whole Bar */
@@ -64,63 +63,72 @@
 {
  background: rgba(0,0,0,0);
 
- font-size: 12px;
- font-weight: bold;
+ font-size:   12px;
  font-family: "Bitstream Vera Sans Mono Bold";
+ font-weight: bold;
 }
 
 /* Modules */
-#mode,
-#clock,
-#clock.date,
-#clock.time
-{
- background: @dark;
-
- color: #fb9062;
- padding: 0 0.7em;
- font-weight: bold;
- padding-left: 0.7em;
- padding-right: 0.7em;
-}
-
-#custom-gammarelay,
-#custom-pacman,
+#cpu,
+#memory,
+#network,
 #pulseaudio,
 #temperature,
-#memory,
-#cpu,
-#network
+#custom-pacman,
+#custom-gammarelaybrightness,
+#custom-gammarelaytemperature
 {
+ color:      @lightpurple;
  background: @dark;
 
- color: @lightpurple;
- padding: 0 0.7em;
- font-weight: bold;
- padding-left: 0.7em;
+ padding-left:  0.7em;
  padding-right: 0.7em;
+ padding:       0 0.7em;
+ font-weight:   bold;
+}
+
+#custom-pacman
+{
+ color:      @orange;
+ background: @dark;
+
+ padding-left:  0.7em;
+ padding-right: 0.7em;
+ padding:       0 0.7em;
+ font-weight:   bold;
 }
 
 #custom-power
 {
+ color:      @red;
  background: @dark;
 
- color: @red;
- padding: 0 0.7em;
- font-weight: bold;
- padding-left: 0.7em;
+ padding-left:  0.7em;
  padding-right: 0.7em;
+ padding:       0 0.7em;
+ font-weight:   bold;
 }
 
 #battery
 {
+ color:      @green;
  background: @dark;
 
- color: @green;
- padding: 0 0.7em;
- font-weight: bold;
- padding-left: 0.7em;
+ padding-left:  0.7em;
  padding-right: 0.7em;
+ padding:       0 0.7em;
+ font-weight:   bold;
+}
+
+#mode
+{
+ color:      #fb9062;
+ background: @dark;
+
+ padding-left:  0.7em;
+ padding-right: 0.7em;
+ padding:       0 0.7em;
+ font-weight:   bold;
 }
 
 /* Blinking Modules */
@@ -129,9 +137,9 @@
 #battery, 
 #temperature
 {
- animation-direction: alternate;
  animation-timing-function: linear;
  animation-iteration-count: infinite;
+ animation-direction:       alternate;
 }
 
 /* Critical Modules */
@@ -149,8 +157,8 @@
 #temperature.critical,
 #battery.critical.discharging 
 {
- animation-name: blink-critical;
  animation-duration: 3s;
+ animation-name:     blink-critical;
 }
 
 /* Warning */
@@ -160,16 +168,15 @@
 #temperature.warning,
 #network.disconnected
 {
+ color:      @dark;
  background: @warning;
-
- color: @dark;
 }
 
 /* Blinking Warnings */
 #battery.warning.discharging 
 {
  animation-duration: 3s;
- animation-name: blink-warning;
+ animation-name:     blink-warning;
 }
 
 /* Modules in Order */
@@ -190,25 +197,25 @@
 {
  background: none;
 
- padding: 0;
- opacity: 0.3;
- font-size: 1em;
+ padding:     0;
+ opacity:     0.3;
+ font-size:   1em;
  font-weight: bold; 
 }
 
 #workspaces button.urgent 
 {
- opacity: 0.8;
- color: @red;
+ color:        @red;
  border-color: @red;
+
+ opacity: 0.8;
 }
 
 #workspaces button.focused 
 {
+ color:      #ffffff;
  background: #bd93f9;
 
  opacity: 1;
- color: #ffffff;
  padding: 0 0.5em;
 }
-
