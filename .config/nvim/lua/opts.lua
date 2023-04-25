@@ -10,9 +10,13 @@ vim.cmd([[
 set relativenumber
 ]])
 
--- Idk
+-- Lists
 opt.wildignore = {'*/cache/*', '*/tmp/*'}
 opt.completeopt = {'menuone', 'noselect', 'noinsert'}
+
+-- Folds
+opt.foldlevel = 0
+opt.foldmethod = "marker"
 
 -- Theme
 opt.syntax = "ON"
