@@ -39,14 +39,16 @@
 
 /* Colors */
 @define-color red #ff0000;
-@define-color green #00ff00;
-@define-color orange #ffb758;
-@define-color mode #c90076;
 @define-color dark #282a36;
+@define-color green #00ff00;
+@define-color white #ffffff;
+@define-color orange #ffb758;
+@define-color lightpurple #bd93f9;
+
+@define-color mode #c90076;
 @define-color blink #ff4545;
 @define-color warning #ce7e00;
-@define-color critical #ff0000;
-@define-color lightpurple #bd93f9;
+@define-color critical #e58e73;
 @define-color workspacesfocused #4c566a;
 
 /* Reset */
@@ -63,39 +65,39 @@
 {
  background: rgba(0,0,0,0);
 
+ font-weight: bold;
  font-size:   12px;
  font-family: "Bitstream Vera Sans Mono Bold";
- font-weight: bold;
 }
 
 /* Modules */
 #cpu,
+#disk,
 #memory,
 #network,
 #pulseaudio,
-#temperature,
 #custom-pacman,
 #custom-gammarelaybrightness,
 #custom-gammarelaytemperature
 {
- color:      @lightpurple;
  background: @dark;
+ color:      @lightpurple;
 
+ font-weight:   bold;
  padding-left:  0.7em;
  padding-right: 0.7em;
  padding:       0 0.7em;
- font-weight:   bold;
 }
 
 #custom-pacman
 {
- color:      @orange;
  background: @dark;
+ color:      @orange;
 
+ font-weight:   bold;
  padding-left:  0.7em;
  padding-right: 0.7em;
  padding:       0 0.7em;
- font-weight:   bold;
 }
 
 #custom-power
@@ -103,39 +105,38 @@
  color:      @red;
  background: @dark;
 
+ font-weight:   bold;
  padding-left:  0.7em;
  padding-right: 0.7em;
  padding:       0 0.7em;
- font-weight:   bold;
 }
 
 #battery
 {
- color:      @green;
  background: @dark;
+ color:      @green;
 
+ font-weight:   bold;
  padding-left:  0.7em;
  padding-right: 0.7em;
  padding:       0 0.7em;
- font-weight:   bold;
 }
 
 #mode
 {
- color:      #fb9062;
  background: @dark;
+ color:      @white;
 
+ font-weight:   bold;
  padding-left:  0.7em;
  padding-right: 0.7em;
  padding:       0 0.7em;
- font-weight:   bold;
 }
 
 /* Blinking Modules */
 #mode,
 #memory,
-#battery, 
-#temperature
+#battery 
 {
  animation-timing-function: linear;
  animation-iteration-count: infinite;
@@ -145,45 +146,25 @@
 /* Critical Modules */
 #cpu.critical,
 #memory.critical,
-#battery.critical, 
-#temperature.critical
+#battery.critical 
 {
  color: @critical;
 }
 
 /* Critical/Blinking Modules */
 #mode,
-#memory.critical,
-#temperature.critical,
-#battery.critical.discharging 
+#memory.critical
 {
  animation-duration: 3s;
  animation-name:     blink-critical;
 }
 
 /* Warning */
-#cpu.warning,
-#memory.warning,
 #battery.warning, 
-#temperature.warning,
 #network.disconnected
 {
  color:      @dark;
  background: @warning;
-}
-
-/* Blinking Warnings */
-#battery.warning.discharging 
-{
- animation-duration: 3s;
- animation-name:     blink-warning;
-}
-
-/* Modules in Order */
-#mode 
-{ 
- color: @blink;
- background: @mode;
 }
 
 /* Workspaces */
@@ -198,7 +179,7 @@
  background: none;
 
  padding:     0;
- opacity:     0.3;
+ opacity:     0.5;
  font-size:   1em;
  font-weight: bold; 
 }
@@ -213,8 +194,8 @@
 
 #workspaces button.focused 
 {
- color:      #ffffff;
- background: #bd93f9;
+ color:      @white;
+ background: @lightpurple;
 
  opacity: 1;
  padding: 0 0.5em;
