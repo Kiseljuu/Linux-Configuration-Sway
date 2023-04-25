@@ -9,5 +9,5 @@
 # Configuration Directory
 include $HOME/.config/sway/config.d/*
 
-# Uncomment if --> Every Application = Wayland-compatible
+# Uncomment --> Every Application = Wayland-compatible
 # xwayland disable
