@@ -1,5 +1,5 @@
 # Color
-export TERM='rxvt-256color'
+case $TERM in xterm) TERM=xterm-256color;; esac
 
 # Editors
 export EDITOR="nvim"
