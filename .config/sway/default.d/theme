@@ -2,14 +2,11 @@
 gaps inner 10
 gaps outer 10
 
-# Border Size 
-default_border pixel 3
-
-# Default Font
-font pango:Liberation Mono 12
-
 # Thin Borders
 smart_borders on
+
+# Border Size 
+default_border pixel 3
 
 # Wallpaper
 exec swaybg -i ~/.config/sway/sway.jpg
