@@ -1,0 +1,4 @@
+calendar = /home/von/.when/calendar
+editor = nvim
+calendar_today_style = "fgpurple,bold"
+monday_first = true
